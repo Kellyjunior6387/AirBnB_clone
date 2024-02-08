@@ -33,9 +33,28 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         elif len(arg) == 1:
             print ("**instance id missing **")
-        elif "{}.{}".format(arg[0], arg[1] not in obj_dict.keys():
-                print("** no instance found **")
+        elif "{}.{}".format(arg[0], arg[1]) not in obj_dict.keys():
+            print("** no instance found **")
+        else:
+            print(obj_dict["{}.{}".format(arg[0], arg[1])])
 
+    def do_destroy(self, arg):
+        """Usage: destroy <class> <id> or <class>.destroy(<id>)
+        Delete a instance of a given id."""
+        arg = parse(arg)
+        obj_dict = storage.all()
+        if arg == 0:
+            print("** class name missing **")n
+        elif arg[0] not in HBNBCommand._classes:
+            print("** class doesn't exist **")
+        elif len(arg) == 1:
+            print("** instance id missing **")
+        elif "{}.{}".format(arg[0], arg[1]) not in obj_dict.keys():
+            print("** no instance found **")
+        else:
+            del objdict["{}.{}".format(arg[0], arg[1])]
+            storage.save()
+        
     def do_EOF(self, arg):
         """Exit the program by typing EOF (Ctrl+D)"""
         print("")
